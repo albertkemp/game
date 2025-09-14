@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvr1y8q28f58q"]
+[gd_scene load_steps=7 format=3 uid="uid://cvr1y8q28f58q"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_f3sb7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv5m4"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -13,6 +15,11 @@ sky = SubResource("Sky_f3sb7")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
+size = Vector3(154.8, 4.8, 126.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fj7yv"]
+
 [node name="world" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -22,6 +29,10 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fj7yv")
 
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(19.2, 0, 0, 0, 22.6548, 0, 0, 0, 3.2832, -0.8, 10, 2.4)
+
+[node name="wall3" type="CSGBox3D" parent="level"]
 [node name="CSGBox3D#CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(0.42, 0, 0, 0, 4.07278e-08, 0.307085, 0, -1.7057, 1.08927e-08, -0.0208333, 0.0873987, 0.335039)
 operation = 2
@@ -51,15 +62,48 @@ size = Vector3(20, 10, 2)
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 6, 28.1)
 size = Vector3(20, 10, 2)
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="wall2" type="CSGBox3D" parent="level"]
 transform = Transform3D(-3.93403e-08, 0, 1, 0, 1, 0, -0.9, 0, -4.37114e-08, -17.2, 0, 48.4)
 size = Vector3(50, 30, 2)
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="wall4" type="CSGBox3D" parent="level"]
 transform = Transform3D(-3.93403e-08, 0, 1, 0, 1, 0, -0.9, 0, -4.37114e-08, 15.4, 0, 48.4)
 size = Vector3(50, 30, 2)
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="door" type="CSGBox3D" parent="level"]
 transform = Transform3D(-2.44869e-07, 0, 10.948, 0, 11.52, 0, -5.60196, 0, -4.78552e-07, 15.4, 2.752, 48.4)
 operation = 2
 size = Vector3(1, 1.2, 1)
+
+[node name="wall" type="CSGBox3D" parent="level"]
+transform = Transform3D(19.2, 0, 0, 0, 22.6548, 0, 0, 0, 3.2832, -0.8, 10, 2.4)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="level/wall"]
+transform = Transform3D(0.42, 0, 0, 0, 4.07278e-08, 0.307085, 0, -1.7057, 1.08927e-08, -0.0208333, 0.0873987, 0.335039)
+operation = 2
+
+[node name="ramp" type="CSGBox3D" parent="level"]
+transform = Transform3D(-3.9, 0, 0, 0, -0.933975, -1.98, 0, -0.53923, 3.42946, 43.6, 3.8, 19.5)
+size = Vector3(10, 2, 10)
+
+[node name="ball" type="CSGSphere3D" parent="level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.9, 61.5)
+radius = 5.005
+
+[node name="CSG" type="CSGBox3D" parent="level"]
+transform = Transform3D(1.6, 0, 0, 0, 1.575, 0, 0, 0, 1, -1.44, 6.2, 70.2)
+size = Vector3(21.8, 10, 2)
+
+[node name="ProtoController2" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3, 19.8, 66.2)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300001, 12.4, 37.1)
+shape = SubResource("BoxShape3D_f3sb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(154.678, 0, 0, 0, 1, 0, 0, 0, 128.252, 0, 0, 37.2)
+mesh = SubResource("BoxMesh_fj7yv")
+skeleton = NodePath("../..")
