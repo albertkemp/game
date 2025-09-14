@@ -28,8 +28,9 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fj7yv")
-
-[node name="level" type="CSGCombiner3D" parent="."]
+s
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(19.2, 0, 0, 0, 22.6548, 0, 0, 0, 3.2832, -0.8, 10, 2.4)
 
 [node name="wall3" type="CSGBox3D" parent="level"]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 6, 28.1)
