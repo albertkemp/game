@@ -67,6 +67,7 @@ size = Vector3(20, 10, 2)
 transform = Transform3D(-3.93403e-08, 0, 1, 0, 1, 0, -0.9, 0, -4.37114e-08, -17.2, 0, 49.4)
 size = Vector3(50, 30, 2)
 
+[node name="level#wall4" type="CSGBox3D" parent="."]
 [node name="CSGBox3D" type="CSGBox3D" parent="room/level#wall2"]
 transform = Transform3D(1, -4.85682e-08, 4.85682e-08, 4.85682e-08, -2.98023e-08, -1, 4.85682e-08, 1, -2.98023e-08, -2, 3.86274, 1.03502)
 operation = 2
@@ -76,22 +77,34 @@ size = Vector3(5, 7, 11)
 transform = Transform3D(-3.93403e-08, 0, 1, 0, 1, 0, -0.9, 0, -4.37114e-08, 15.4, 0, 48.4)
 size = Vector3(50, 30, 2)
 
+[node name="level#door" type="CSGBox3D" parent="."]
+transform = Transform3D(-2.44869e-07, 0, 10.948, 0, 11.52, 0, -5.60196, 0, -4.78552e-07, 15.4, 2.752, 48.4)
 [node name="level#door" type="CSGBox3D" parent="room/level#wall4"]
 transform = Transform3D(6.2244, 0, -4.54747e-13, 0, 11.52, 0, 7.67386e-13, 0, 10.948, 0, 2.752, 0)
 operation = 2
 size = Vector3(1, 1.2, 1)
 
+[node name="level#wall" type="CSGBox3D" parent="."]
+transform = Transform3D(19.2, 0, 0, 0, 22.6548, 0, 0, 0, 3.2832, -0.8, 10, 2.4)
+
+[node name="level_wall#CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.42, 0, 0, 0, 4.07278e-08, 0.307085, 0, -1.7057, 1.08927e-08, -0.0208333, 0.0873987, 0.335039)
+operation = 2
 [node name="CSGBox3D" type="CSGBox3D" parent="room"]
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, -28, 0, 29.5)
 size = Vector3(25, 1, 20)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="room"]
-transform = Transform3D(8.74228e-08, 1, 4.37114e-08, -4.37114e-08, 4.37114e-08, -1, -1, 8.74228e-08, 4.37114e-08, -37.5, 7, 43)
-size = Vector3(28, 1, 20)
+[node name="level#ramp" type="CSGBox3D" parent="."]
+transform = Transform3D(-3.9, 0, 0, 0, -0.933975, -1.98, 0, -0.53923, 3.42946, 43.6, 3.8, 19.5)
+size = Vector3(10, 2, 10)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 8.5, 57.5)
-size = Vector3(15, 16, 2)
+[node name="ball" type="CSGSphere3D" parent="level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.9, 61.5)
+radius = 5.005
+
+[node name="CSG" type="CSGBox3D" parent="level"]
+transform = Transform3D(1.6, 0, 0, 0, 1.575, 0, 0, 0, 1, -1.44, 6.2, 70.2)
+size = Vector3(21.8, 10, 2)
 
 [node name="ProtoController2" parent="." instance=ExtResource("1_f3sb7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3, 19.8, 66.2)
