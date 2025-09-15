@@ -29,7 +29,36 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fj7yv")
 
-[node name="level#wall3" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(19.2, 0, 0, 0, 22.6548, 0, 0, 0, 3.2832, -0.8, 10, 2.4)
+
+[node name="wall3" type="CSGBox3D" parent="level"]
+[node name="CSGBox3D#CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.42, 0, 0, 0, 4.07278e-08, 0.307085, 0, -1.7057, 1.08927e-08, -0.0208333, 0.0873987, 0.335039)
+operation = 2
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(152.764, 0, 0, 0, 16.66, 0, 0, 0, 124.901, 0, -1.4, 36.8)
+size = Vector3(1, 0.1, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(-3.9, 0, 0, 0, -0.933975, -1.98, 0, -0.53923, 3.42946, 43.6, 3.8, 19.5)
+size = Vector3(10, 2, 10)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.9, 61.5)
+radius = 5.005
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.7015, 5.64068, 56.9236)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.6, 0, 0, 0, 1.575, 0, 0, 0, 1, 0, 6.2, 70.2)
+size = Vector3(20, 10, 2)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 6, 28.1)
 size = Vector3(20, 10, 2)
 
