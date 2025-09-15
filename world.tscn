@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvr1y8q28f58q"]
+[gd_scene load_steps=9 format=3 uid="uid://cvr1y8q28f58q"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://bud8h80rybss7" path="res://models/american_alligator_nhmw-zoo-hs-15682.glb" id="2_fj7yv"]
@@ -16,6 +16,9 @@ background_mode = 2
 sky = SubResource("Sky_fj7yv")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
+size = Vector3(38, 41, 3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
 size = Vector3(154.8, 4.8, 126.2)
@@ -45,14 +48,17 @@ height = 16.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 18, -4.5)
 size = Vector3(7, 37, 10)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="ramp" type="StaticBody3D" parent="."]
 
-[node name="ramp" type="CSGBox3D" parent="StaticBody3D"]
+[node name="box" type="CSGBox3D" parent="ramp"]
 transform = Transform3D(-3.9, 0, 0, 0, -0.933975, -1.98, 0, -0.53923, 3.42946, 43.6, 3.8, 19.5)
 size = Vector3(10, 2, 10)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(10, 0, 0, 0, -8.22725, 0.913396, 0, -4.75, -1.58205, 0, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ramp"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 43.5, 3.13397, 19.0708)
+shape = SubResource("BoxShape3D_fj7yv")
+disabled = true
+debug_color = Color(0.90588, 0.000131686, 0.74517, 0.42)
 
 [node name="ball" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.9, 61.5)
@@ -114,3 +120,8 @@ skeleton = NodePath("../..")
 
 [node name="alligator" parent="." instance=ExtResource("2_fj7yv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1, 56)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.225, 0, 0, 0, 0.36, 52, 1, 62)
+inner_radius = 20.0
+outer_radius = 0.001
