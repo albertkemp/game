@@ -4,7 +4,7 @@
 # Happy prototyping!
 
 extends CharacterBody3D
-
+#a bunch of random variables:
 ## Can we move around?
 @export var can_move : bool = true
 ## Are we affected by gravity?
@@ -12,9 +12,9 @@ extends CharacterBody3D
 ## Can we press to jump?
 @export var can_jump : bool = true
 ## Can we hold to run?
-@export var can_sprint : bool = false
+@export var can_sprint : bool = true
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
+@export var can_freefly : bool =  true
 
 @export_group("Speeds")
 ## Look around rotation speed.
