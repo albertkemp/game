@@ -28,7 +28,7 @@ size = Vector3(154.8, 4.8, 126.2)
 environment = SubResource("Environment_tlwt5")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.573576, 0.819152, 0, -0.819152, -0.573576, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707106, 0, -0.707106, 0.707107, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 1.0
 
@@ -45,9 +45,14 @@ height = 16.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 18, -4.5)
 size = Vector3(7, 37, 10)
 
-[node name="ramp" type="CSGBox3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="ramp" type="CSGBox3D" parent="StaticBody3D"]
 transform = Transform3D(-3.9, 0, 0, 0, -0.933975, -1.98, 0, -0.53923, 3.42946, 43.6, 3.8, 19.5)
 size = Vector3(10, 2, 10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, -8.22725, 0.913396, 0, -4.75, -1.58205, 0, 0, 0)
 
 [node name="ball" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.9, 61.5)
@@ -85,6 +90,14 @@ size = Vector3(1, 1.2, 1)
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, -28, 0, 29.5)
 size = Vector3(25, 1, 20)
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="room"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.1, 4.6, 60.45)
+size = Vector3(2.1, 14.6, 22)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.8, 5.9, 46.65)
+size = Vector3(1, 12.8, 33.5)
+
 [node name="ProtoController2" parent="." instance=ExtResource("1_f3sb7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3, 19.8, 66.2)
 
@@ -99,5 +112,5 @@ transform = Transform3D(154.678, 0, 0, 0, 1, 0, 0, 0, 128.252, 0, -1, 37.2)
 mesh = SubResource("BoxMesh_fj7yv")
 skeleton = NodePath("../..")
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("2_fj7yv")]
+[node name="alligator" parent="." instance=ExtResource("2_fj7yv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1, 56)
