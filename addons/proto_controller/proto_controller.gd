@@ -3,7 +3,10 @@
 # Intended for rapid prototyping of first-person games.
 # Happy prototyping!
 
+# This script is a CharacterBody3D controller for a first-person perspective.
+# It handles movement, jumping, sprinting, gravity, and camera look.
 extends CharacterBody3D
+
 #a bunch of random variables:
 ## Can we move around?
 @export var can_move : bool = true
@@ -44,6 +47,7 @@ extends CharacterBody3D
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
 
+# Internal variables for tracking state
 var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
@@ -53,11 +57,15 @@ var freeflying : bool = false
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Check if all necessary input actions are defined in the project settings.
 	check_input_mappings()
+	# Initialize the look rotation from the current node's transform.
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 
+# Called for every unhandled input event. This is good for one-off actions.
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -76,46 +84,55 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			disable_freefly()
 
+# Called every physics frame. Used for movement and physics calculations.
 func _physics_process(delta: float) -> void:
-	# If freeflying, handle freefly and nothing else
+	# If freeflying, handle freefly movement and ignore everything else.
 	if can_freefly and freeflying:
+		# Get movement input from WASD or arrow keys.
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+		# Calculate movement vector based on the head's rotation (camera direction).
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
+		# Move the character without considering gravity or collisions (since collider is disabled).
 		move_and_collide(motion)
 		return
 	
-	# Apply gravity to velocity
+	# Apply gravity to velocity if not on the floor.
 	if has_gravity:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
 
-	# Apply jumping
+	# Apply jumping velocity if the character is on the floor and the jump key is pressed.
 	if can_jump:
 		if Input.is_action_just_pressed(input_jump) and is_on_floor():
 			velocity.y = jump_velocity
 
-	# Modify speed based on sprinting
+	# Modify speed based on sprinting.
 	if can_sprint and Input.is_action_pressed(input_sprint):
 			move_speed = sprint_speed
 	else:
 		move_speed = base_speed
 
-	# Apply desired movement to velocity
+	# Apply desired movement to velocity.
 	if can_move:
+		# Get input vector for horizontal movement.
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+		# Calculate the movement direction based on the character's forward direction.
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if move_dir:
+			# If there's input, set the horizontal velocity.
 			velocity.x = move_dir.x * move_speed
 			velocity.z = move_dir.z * move_speed
 		else:
+			# If no input, smoothly slow down to a stop.
 			velocity.x = move_toward(velocity.x, 0, move_speed)
 			velocity.z = move_toward(velocity.z, 0, move_speed)
 	else:
+		# If movement is disabled, stop all horizontal movement.
 		velocity.x = 0
 		velocity.y = 0
 	
-	# Use velocity to actually move
+	# Use velocity to actually move the character while handling collisions.
 	move_and_slide()
 
 
@@ -123,31 +140,43 @@ func _physics_process(delta: float) -> void:
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
 func rotate_look(rot_input : Vector2):
+	# Update the pitch (x-axis) rotation from mouse input.
 	look_rotation.x -= rot_input.y * look_speed
+	# Clamp the pitch to prevent the camera from flipping over.
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
+	# Update the yaw (y-axis) rotation from mouse input.
 	look_rotation.y -= rot_input.x * look_speed
+	# Reset the character's basis to prevent accumulating rotations.
 	transform.basis = Basis()
+	# Apply the new yaw rotation.
 	rotate_y(look_rotation.y)
+	# Reset the head's basis.
 	head.transform.basis = Basis()
+	# Apply the new pitch rotation to the head node.
 	head.rotate_x(look_rotation.x)
 
 
 func enable_freefly():
+	# Disable the collision shape to allow passing through walls.
 	collider.disabled = true
 	freeflying = true
+	# Stop all movement.
 	velocity = Vector3.ZERO
 
 func disable_freefly():
+	# Re-enable the collision shape.
 	collider.disabled = false
 	freeflying = false
 
 
 func capture_mouse():
+	# Hide the mouse cursor and lock it to the center of the screen.
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	mouse_captured = true
 
 
 func release_mouse():
+	# Show the mouse cursor again.
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
 
@@ -155,6 +184,8 @@ func release_mouse():
 ## Checks if some Input Actions haven't been created.
 ## Disables functionality accordingly.
 func check_input_mappings():
+	# For each movement and action, check if the corresponding InputMap action exists.
+	# If not, disable the feature and print an error message.
 	if can_move and not InputMap.has_action(input_left):
 		push_error("Movement disabled. No InputAction found for input_left: " + input_left)
 		can_move = false
